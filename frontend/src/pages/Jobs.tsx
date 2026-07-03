@@ -182,7 +182,7 @@ const Jobs: React.FC = () => {
     fetchExecutions();
 
     // Subscribe to progress
-    const socket = new SockJS('http://localhost:8080/ws');
+    const socket = new SockJS((import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080') + '/ws');
     const stompClient = Stomp.over(socket);
     stompClient.debug = () => {};
 
