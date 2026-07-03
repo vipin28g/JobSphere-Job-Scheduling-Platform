@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip } from '@mui/material';
+import { Card, CardContent, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip, Alert, Button } from '@mui/material';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import api from '../services/api';
 import WorkIcon from '@mui/icons-material/Work';
@@ -37,9 +37,11 @@ const COLORS = ['#9c27b0', '#00e5ff', '#10b981', '#ef4444', '#f59e0b', '#7b1fa2'
 const Dashboard: React.FC = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [recentJobs, setRecentJobs] = useState<RecentJob[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchStats = async () => {
     try {
+      setError(null);
       const statsRes = await api.get('/api/dashboard/stats');
       setStats(statsRes.data);
 
@@ -49,6 +51,7 @@ const Dashboard: React.FC = () => {
       setRecentJobs(jobsRes.data.content);
     } catch (err) {
       console.error('Error fetching dashboard statistics:', err);
+      setError('Connection to backend failed. Please make sure the backend is running and the tunnel security page is bypassed.');
     }
   };
 
@@ -74,6 +77,15 @@ const Dashboard: React.FC = () => {
       }
     };
   }, []);
+
+  if (error) {
+    return (
+      <Box sx={{ p: 3, textAlign: 'center' }}>
+        <Alert severity="error" sx={{ mb: 2, justifyContent: 'center' }}>{error}</Alert>
+        <Button variant="contained" color="primary" onClick={fetchStats}>Retry Connection</Button>
+      </Box>
+    );
+  }
 
   if (!stats) {
     return <Typography>Loading dashboard metrics...</Typography>;
