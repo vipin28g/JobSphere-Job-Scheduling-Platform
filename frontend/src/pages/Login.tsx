@@ -40,7 +40,7 @@ const Login: React.FC = () => {
           <CardContent>
             <Box sx={{ textAlign: 'center', mb: 3 }}>
               <Typography variant="h4" component="h1" sx={{ fontWeight: 800, background: 'linear-gradient(45deg, #9c27b0 30%, #00e5ff 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', mb: 1 }}>
-                Antigravity
+                JobSphere
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Enter your credentials to access the scheduler panel
