@@ -1,0 +1,19 @@
+# Databases and tools
+tools/
+db-data/
+*.log
+postgres.log
+
+# Build & Dependency Artifacts
+backend/target/
+frontend/node_modules/
+frontend/dist/
+
+# IDE settings
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
