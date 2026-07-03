@@ -26,6 +26,19 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private UserDetailsServiceImpl userDetailsService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        String method = request.getMethod();
+        
+        return "OPTIONS".equalsIgnoreCase(method)
+                || path.startsWith("/api/auth/")
+                || path.startsWith("/api-docs")
+                || path.startsWith("/swagger-ui")
+                || path.equals("/error")
+                || path.startsWith("/ws");
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
